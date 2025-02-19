@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+        <!-- favicon -->
+        <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon" />
+        <!-- normalize -->
+        <link rel="stylesheet" href="/HTML/e-learning/css/normlize.css" />
+        <!-- font-awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+        />
+    <!-- main css -->
+    <link rel="stylesheet" href="/HTML/e-learning/css/resturant.css" />
+    <title>Contact</title>
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="center">
+                <!-- header-->
+                div class="header">
+                <a href="index.html" class="nav-logo"
+                  ><img src="/HTML/e-learning/imgs/Logo.png" alt="iSkills logo"
+                /></a>
+                <button type="button" class="btn nav-btn">
+                  <i class="fas fa-align-justify"></i>
+                </button>
+              </div>
+              <!-- links-->
+              <div class="links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="tags.html" class="nav-link">Feild</a>
+                <a href="courses.html" class="nav-link">Course</a>
+                <a href="cart.html" class="nav-link"
+                  ><i class="fa fa-shopping-cart"></i>Cart</a
+                >
+                <div class="nav-link contact-link">
+                  <a href="contact.html" class="btn">Contact</a>
+                </div>
+              </div>
+            </div>
+        </nav>
+        <!-- end nav -->
+        <!--main-->
+        <main class="page">
+            <section class="contact-page">
+                <article class="contact-info">
+                    <h2>Want To Get In Touch?</h2>
+                    <p>
+                        We’d love to hear from you! 
+                        <br>Whether you have a question about our courses, need assistance with enrollment,  
+                        or want to share your learning experience, feel free to reach out.
+                    </p>
+                    <div class="info">
+                        <h3>Visit Us:</h3>
+                        <p class="info">
+                            <span>iSkills</span>
+                            123 Main Street
+                            <br>Cairo, Egypt
+                        </p>
+                        <h3>Phone:</h3>
+                        <p class="info">
+                            +20 123-456-7890</p>
+                        <h3>Email:</h3>
+                        <p class="info">
+                        iSkills@gmail.com </p>
+                    </div>
+                </article>
+                <article>
+                    <form class="form contact-form">
+                        <!--single form row-->
+                        <div class="form-row">
+                            <label for="name" class="form-label">Your name</label>
+                            <input type="text" name="name" id="name" class="form-input"/>
+                        </div>
+                        <!--end single form row-->
+                        <!--single form row-->
+                        <div class="form-row">
+                            <label for="email" class="form-label">Your email</label>
+                            <input type="text" name="email" id="email" class="form-input"/>
+                            
+                        </div>
+                        <!--end single form row-->
+                        <!--single form row-->
+                        <div class="form-row">
+                            <label for="message" class="form-label">message</label>
+                            <textarea name="message" id="message" class="form-textarea"></textarea>
+                        </div>
+                        <!--end single form row-->
+                        <button type="submit" class="btn btn-block">Submit</button>
+                    </form>
+                </article>
+            </section>
+            <section class="featured-courses">
+                <h5 class="featured-title">Look At this Awesome Courses!</h5>
+                <!--courses list-->
+                <div class="course-list">
+                    <!--single course-->
+                    <a
+                        href="single-course.html"
+                        class="course option"
+                        data-category="Frontend"
+                    >
+                        <img
+                        src="/HTML/e-learning/imgs/3.jpg"
+                        alt="course"
+                        class="img course-img"
+                        />
+                        <h5>The Complete Front-End Web Development CourseGet started with
+                            HTML, CSS, JavaScript, jQuery, and Bootstrap!</h5>
+                        <p>Rating: 4.3 out of 514333 reviews</p>
+                        <p>Price: 220$</p>
+                    </a>
+                    <a href="single-course.html" 
+                        class="course option" 
+                        data-category="Backend">
+                        <img
+                            src="/HTML/e-learning/imgs/5.jpg"
+                            alt="course"
+                            class="img course-img"
+                        />
+                        <h5>Backend Master Class [Golang + Postgres + Kubernetes + gRPC]</h5>
+                        <p>Rating: 4.8 out of 214333 reviews</p>
+                        <p>Price: 300$</p>
+                    </a>
+                    <a
+                        href="single-course.html"
+                        class="course option"
+                        data-category="Embedded Systems"
+                    >
+                    <img
+                    src="/HTML/e-learning/imgs/1.jpg"
+                    alt="course"
+                    class="img course-img"
+                    />
+                    <h5>Mastering Microcontroller and Embedded Driver Development</h5>
+                    <p>Rating: 4.1 out of 812633 reviews</p>
+                    <p>Price: 180$</p>
+                    </a>
+                    <!--end single course-->
+                </div>
+                <!--end courses list-->
+            </section></main>
+        <!--end main-->
+        <!--footer-->
+        <footer class="page-footer">
+            <p>&copy;<span id="date">2025</span>
+                <span class="footer-logo">Mimi Foods</span>
+                Build by <a href="https://abdelrhman744.github.io/Portfolio/">Hetta</a>
+            </p>
+        </footer>
+        <script>
+            const getElement = (selector) => {
+                const element = document.querySelector(selector)
+                if (element) return element
+                throw Error(
+                    `Please double check your class names, there is no ${selector} class`
+                )
+            }
+            const linkss = getElement('.links');
+            const navBtnDOM = getElement('.nav-btn');
+        
+            navBtnDOM.addEventListener('click', () => {
+                linkss.classList.toggle('show-link'); })
+        
+            const date = getElement('#date')
+            const currentYear = new Date().getFullYear()
+            date.textContent = currentYear
+        </script>
+    </body>
+</html>

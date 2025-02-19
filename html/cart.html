@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon" />
+    <!-- normalize -->
+    <link rel="stylesheet" href="/HTML/e-learning/css/normlize.css" />
+    <!-- font-awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <!-- main css -->
+    <link rel="stylesheet" href="/HTML/e-learning/css/resturant.css" />
+    <title>Cart</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="center">
+            <!-- header-->
+            <div class="header">
+                <a href="index.html" class="nav-logo"
+                  ><img src="/HTML/e-learning/imgs/Logo.png" alt="iSkills logo"
+                /></a>
+                <button type="button" class="btn nav-btn">
+                  <i class="fas fa-align-justify"></i>
+                </button>
+              </div>
+              <!-- links-->
+              <div class="links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="tags.html" class="nav-link">Feild</a>
+                <a href="courses.html" class="nav-link">Course</a>
+                <a href="cart.html" class="nav-link"
+                  ><i class="fa fa-shopping-cart"></i>Cart</a
+                >
+                <div class="nav-link contact-link">
+                  <a href="contact.html" class="btn">Contact</a>
+                </div>
+              </div>
+        </div>
+    </nav>
+    <!-- end nav -->
+
+    <main class="page">
+        <div class="wrapper">
+            <div class="project">
+                <div class="shop" id="cart-items">
+                    <!-- Cart items will be dynamically rendered here -->
+                </div>
+                <div class="right-bar">
+                    <p><span>Subtotal</span> <span id="subtotal">$0</span></p>
+                    <hr>
+                    <p><span>Tax (5%)</span> <span id="tax">$0</span></p>
+                    <hr>
+                    <p><span>Shipping</span> <span id="shipping">$15</span></p>
+                    <hr>
+                    <p><span>Total</span> <span id="total">$15</span></p>
+                    <a href="payment.html" id="checkout-btn" class="btn">Proceed to Payment</a>
+                </div>
+            </div>
+        </div>
+        <section class="featured-courses">
+            <h5 class="featured-title">Look At this Awesome Courses!</h5>
+            <!--courses list-->
+            <div class="course-list">
+                <!--single course-->
+                <a
+                    href="single-course.html"
+                    class="course option"
+                    data-category="Frontend"
+                >
+                    <img
+                    src="/HTML/e-learning/imgs/3.jpg"
+                    alt="course"
+                    class="img course-img"
+                    />
+                    <h5>The Complete Front-End Web Development CourseGet started with
+                        HTML, CSS, JavaScript, jQuery, and Bootstrap!</h5>
+                    <p>Rating: 4.3 out of 514333 reviews</p>
+                    <p>Price: 220$</p>
+                </a>
+                <a href="single-course.html" 
+                    class="course option" 
+                    data-category="Backend">
+                    <img
+                        src="/HTML/e-learning/imgs/5.jpg"
+                        alt="course"
+                        class="img course-img"
+                    />
+                    <h5>Backend Master Class [Golang + Postgres + Kubernetes + gRPC]</h5>
+                    <p>Rating: 4.8 out of 214333 reviews</p>
+                    <p>Price: 300$</p>
+                </a>
+                <a
+                    href="single-course.html"
+                    class="course option"
+                    data-category="Embedded Systems"
+                >
+                <img
+                src="/HTML/e-learning/imgs/1.jpg"
+                alt="course"
+                class="img course-img"
+                />
+                <h5>Mastering Microcontroller and Embedded Driver Development</h5>
+                <p>Rating: 4.1 out of 812633 reviews</p>
+                <p>Price: 180$</p>
+                </a>
+                <!--end single course-->
+            </div>
+            <!--end courses list-->
+        </section>
+    </main>
+
+    <footer class="page-footer">
+        <p>&copy;<span id="date">2025</span>
+            <span class="footer-logo">Mimi Foods</span>
+            Built by <a href="https://abdelrhman744.github.io/Portfolio/">Hetta</a>
+        </p>
+    </footer>
+    <script>
+        const getElement = (selector) => {
+            const element = document.querySelector(selector)
+            if (element) return element
+            throw Error(
+                `Please double check your class names, there is no ${selector} class`
+            )
+        }
+        const linkss = getElement('.links');
+        const navBtnDOM = getElement('.nav-btn');
+    
+        navBtnDOM.addEventListener('click', () => {
+            linkss.classList.toggle('show-link'); })
+    
+        const date = getElement('#date')
+        const currentYear = new Date().getFullYear()
+        date.textContent = currentYear
+    </script>
+    <script>
+        // Function to add item to cart
+        function addToCart(item) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Check if item already exists in cart
+            const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
+            
+            if (existingItemIndex > -1) {
+                // If item exists, increment quantity
+                cart[existingItemIndex].quantity += 1;
+            } else {
+                // If item doesn't exist, add new item with all required properties
+                cart.push({
+                    id: item.id,
+                    title: item.title,
+                    price: parseFloat(item.price), // Ensure price is stored as a number
+                    image: item.image,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart(); // Update cart display
+        }
+
+        // Function to render the cart items
+        function renderCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            cartItemsContainer.innerHTML = '';
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                // Validate price and quantity
+                const price = item.price ? parseFloat(item.price) : 0;
+                const quantity = item.quantity || 1;
+                
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('box');
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}" />
+                    <div class="content">
+                        <h3>${item.title}</h3>
+                        <h4>Price: $${price.toFixed(2)}</h4>
+                        <p class="unit">Quantity: <input type="number" value="${quantity}" min="1" data-index="${index}" class="item-quantity"></p>
+                        <p class="btn-area"><i aria-hidden="true" class="fa fa-trash"></i> <span class="btn2" data-index="${index}">Remove</span></p>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+                subtotal += price * quantity;
+            });
+
+            // Update totals with validation
+            const tax = subtotal * 0.05;
+            const shipping = 15;
+            const total = subtotal + tax + shipping;
+
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+            document.getElementById('shipping').textContent = `$${shipping.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Function to remove an item from the cart
+        function removeItem(index) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        // Function to update quantity
+        function updateQuantity(index, newQuantity) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart[index]) {
+                cart[index].quantity = Math.max(1, parseInt(newQuantity) || 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+            }
+        }
+
+        // Event listener for remove buttons
+        document.addEventListener('click', function(event) {
+            if (event.target && event.target.classList.contains('btn2')) {
+                const index = parseInt(event.target.dataset.index);
+                removeItem(index);
+            }
+        });
+
+        // Event listener for quantity changes
+        document.addEventListener('input', function(event) {
+            if (event.target && event.target.classList.contains('item-quantity')) {
+                const index = parseInt(event.target.dataset.index);
+                const quantity = parseInt(event.target.value);
+                updateQuantity(index, quantity);
+            }
+        });
+
+        // Event listener for checkout button
+        document.getElementById('checkout-btn').addEventListener('click', function(event) {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cart.length === 0) {
+        event.preventDefault(); // Prevent navigation only if cart is empty
+        alert('Your cart is empty!');
+    } else {
+        localStorage.setItem("cartTotal", JSON.stringify({
+            subtotal: document.getElementById('subtotal').textContent,
+            tax: document.getElementById('tax').textContent,
+            shipping: document.getElementById('shipping').textContent,
+            total: document.getElementById('total').textContent
+        }));
+    }
+});
+
+
+        // Update footer date
+        document.getElementById('date').textContent = new Date().getFullYear();
+
+        // Render the cart items on page load
+        window.onload = renderCart;
+    </script>
+</body>
+</html>

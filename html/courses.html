@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <!-- favicon -->
+    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon" />
+    <!-- normalize -->
+    <link rel="stylesheet" href="/HTML/e-learning/css/normlize.css" />
+    <!-- font-awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <!-- main css -->
+    <link rel="stylesheet" href="/HTML/e-learning/css/resturant.css" />
+    <title>Courses</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="center">
+            <!-- header-->
+            <div class="header">
+                <a href="index.html" class="nav-logo"
+                  ><img src="/HTML/e-learning/imgs/Logo.png" alt="iSkills logo"
+                /></a>
+                <button type="button" class="btn nav-btn">
+                  <i class="fas fa-align-justify"></i>
+                </button>
+              </div>
+              <!-- links-->
+              <div class="links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="tags.html" class="nav-link">Feild</a>
+                <a href="courses.html" class="nav-link">Course</a>
+                <a href="cart.html" class="nav-link"
+                  ><i class="fa fa-shopping-cart"></i>Cart</a
+                >
+                <div class="nav-link contact-link">
+                  <a href="contact.html" class="btn">Contact</a>
+                </div>
+              </div>
+        </div>
+    </nav>
+    <!-- end nav -->
+
+    <main class="page">
+        <section class="course-list" id="course-list">
+            <!-- Course will be dynamically generated here -->
+        </section>
+    </main>
+
+    <footer class="page-footer">
+        <p>&copy;<span id="date">2025</span>
+            <span class="footer-logo">Mimi Foods</span>
+            Built by <a href="https://abdelrhman744.github.io/Portfolio/">Hetta</a>
+        </p>
+    </footer>
+    <script>
+        const getElement = (selector) => {
+            const element = document.querySelector(selector)
+            if (element) return element
+            throw Error(
+                `Please double check your class names, there is no ${selector} class`
+            )
+        }
+        const linkss = getElement('.links');
+        const navBtnDOM = getElement('.nav-btn');
+    
+        navBtnDOM.addEventListener('click', () => {
+            linkss.classList.toggle('show-link'); })
+    
+        const date = getElement('#date')
+        const currentYear = new Date().getFullYear()
+        date.textContent = currentYear
+    </script>
+    <script>
+        // Array of course data with unique IDs
+        const courses = [
+            {
+                id: "course-001",
+                title: "Frontend",
+                image: "/HTML/e-learning/imgs/3.jpg",
+                prepTime: "20min",
+                cookTime: "35min",
+                price: 220
+            },
+            {
+                id: "course-002",
+                title: "Backend",
+                image: "/HTML/e-learning/imgs/5.jpg",
+                prepTime: "5min",
+                cookTime: "5min",
+                price: 300
+            },
+            {
+                id: "course-003",
+                title: "Embedded Systems",
+                image: "/HTML/e-learning/imgs/1.jpg",
+                prepTime: "15min",
+                cookTime: "15min",
+                price: 180
+            },
+            {
+                id: "course-004",
+                title: "Embedded Systems",
+                image: "/HTML/e-learning/imgs/2.jpg",
+                prepTime: "10min",
+                cookTime: "5min",
+                price: 250
+            },
+            {
+                id: "course-005",
+                title: "Machine Learning",
+                image: "/HTML/e-learning/imgs/4.jpg",
+                prepTime: "15min",
+                cookTime: "10min",
+                price: 200
+            }
+        ];
+
+        // Function to add item to cart (matching the cart page implementation)
+        function addToCart(item) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Check if item already exists in cart
+            const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
+            
+            if (existingItemIndex > -1) {
+                // If item exists, increment quantity
+                cart[existingItemIndex].quantity += 1;
+            } else {
+                // If item doesn't exist, add new item with all required properties
+                cart.push({
+                    id: item.id,
+                    title: item.title,
+                    price: parseFloat(item.price),
+                    image: item.image,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Function to render the courses dynamically
+        function renderCourses() {
+            const coursesList = document.getElementById('course-list');
+            coursesList.innerHTML = ''; // Clear existing content
+
+            courses.forEach(course => {
+                const courseElement = document.createElement('div');
+                courseElement.classList.add('course');
+                courseElement.innerHTML = `
+                    <img src="${course.image}" alt="${course.title}" class="img course-img">
+                    <h5>${course.title}</h5>
+                    <p>Preparation: ${course.prepTime}</p>
+                    <p>Cook Time: ${course.cookTime}</p>
+                    <p>Price: $${course.price.toFixed(2)}</p>
+                    <button class="add-to-cart-btn" data-course-id="${course.id}">Add to Cart</button>
+                `;
+                coursesList.appendChild(courseElement);
+            });
+
+            // Add event listeners to the Add to Cart buttons
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const courseId = this.dataset.courseId;
+                    const course = courses.find(r => r.id === courseId);
+                    
+                    if (course) {
+                        addToCart(course);
+                        
+                        // Show a success message
+                        const successMessage = document.createElement('div');
+                        successMessage.classList.add('success-message');
+                        successMessage.textContent = `${recipe.title} added to cart!`;
+                        successMessage.style.position = 'fixed';
+                        successMessage.style.top = '20px';
+                        successMessage.style.right = '20px';
+                        successMessage.style.backgroundColor = '#4CAF50';
+                        successMessage.style.color = 'white';
+                        successMessage.style.padding = '10px 20px';
+                        successMessage.style.borderRadius = '5px';
+                        successMessage.style.zIndex = '1000';
+                        
+                        document.body.appendChild(successMessage);
+                        
+                        // Remove the message after 2 seconds
+                        setTimeout(() => {
+                            successMessage.remove();
+                        }, 2000);
+                    }
+                });
+            });
+        }
+
+        // Update footer date
+        document.getElementById('date').textContent = new Date().getFullYear();
+
+        // Render the courses on page load
+        window.onload = renderCourses;
+
+        // Add mobile menu functionality
+        const navBtn = document.querySelector('.nav-btn');
+        const navbar = document.querySelector('.navbar');
+        const centerDiv = document.querySelector('.center');
+
+        navBtn.addEventListener('click', () => {
+            centerDiv.classList.toggle('show-links');
+        });
+    </script>
+
+</body>
+</html>

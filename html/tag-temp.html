@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+        <!-- favicon -->
+        <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon" />
+        <!-- normalize -->
+        <link rel="stylesheet" href="/HTML/e-learning/css/normlize.css" />
+        <!-- font-awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+        />
+    <!-- main css -->
+    <link rel="stylesheet" href="/HTML/e-learning/css/resturant.css" />
+    <title>Tag temp</title>
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="center">
+                <!-- header-->
+        <div class="header">
+            <a href="index.html" class="nav-logo"
+              ><img src="/HTML/e-learning/imgs/Logo.png" alt="iSkills logo"
+            /></a>
+            <button type="button" class="btn nav-btn">
+              <i class="fas fa-align-justify"></i>
+            </button>
+          </div>
+          <!-- links-->
+          <div class="links">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="tags.html" class="nav-link">Feild</a>
+            <a href="courses.html" class="nav-link">Course</a>
+            <a href="cart.html" class="nav-link"
+              ><i class="fa fa-shopping-cart"></i>Cart</a
+            >
+            <div class="nav-link contact-link">
+              <a href="contact.html" class="btn">Contact</a>
+            </div>
+          </div>
+            </div>
+        </nav>
+        <!-- end nav -->
+        <!--main-->
+        <main class="page">
+            <h1>Embedded Systems</h1>
+            <!--courses list-->
+            <div class="course-list">
+                <!--single course-->
+                <a
+                href=""
+                class="course option"
+                data-category="Embedded Systems"
+              >
+                <img
+                  src="/HTML/e-learning/imgs/1.jpg"
+                  alt="course"
+                  class="img course-img"
+                />
+                <h5>Mastering Microcontroller and Embedded Driver Development</h5>
+                <p>Rating: 4.1 out of 812633 reviews</p>
+                <p>Price: 180$</p>
+              </a>
+              <a
+                href=""
+                class="course option"
+                data-category="Embedded Systems"
+              >
+                <img
+                  src="/HTML/e-learning/imgs/2.jpg"
+                  alt="course"
+                  class="img course-img"
+                />
+                <h5>Introduction to Embedded Systems Software and Development Environments</h5>
+                <p>Rating: 4.9 out of 414983 reviews</p>
+                <p>Price: 250$</p>
+              </a>
+                <!--end single course-->
+            </div>
+            <!--end courses list-->
+        </main>
+        <!--end main-->
+        <!--footer-->
+        <footer class="page-footer">
+            <p>&copy;<span id="date">2025</span>
+                <span class="footer-logo">Mimi Foods</span>
+                Build by <a href="https://abdelrhman744.github.io/Portfolio/">Hetta</a>
+            </p>
+        </footer>
+        <script>
+            const getElement = (selector) => {
+                const element = document.querySelector(selector)
+                if (element) return element
+                throw Error(
+                    `Please double check your class names, there is no ${selector} class`
+                )
+            }
+            const linkss = getElement('.links');
+            const navBtnDOM = getElement('.nav-btn');
+        
+            navBtnDOM.addEventListener('click', () => {
+                linkss.classList.toggle('show-link'); })
+        
+            const date = getElement('#date')
+            const currentYear = new Date().getFullYear()
+            date.textContent = currentYear
+        </script>
+    </body>
+</html>

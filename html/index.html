@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon" />
+    <!-- normalize -->
+    <link rel="stylesheet" href="/HTML/e-learning/css/normlize.css" />
+    <!-- font-awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    />
+    <!-- main css -->
+    <link rel="stylesheet" href="/HTML/e-learning/css/resturant.css" />
+    <title>iSills</title>
+    <style>
+      /* Hide filter menu initially */
+      .filter-menu {
+        display: none;
+      }
+
+      /* Show filter menu when active */
+      .filter-container.active .filter-menu {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="center">
+        <!-- header-->
+        <div class="header">
+          <a href="index.html" class="nav-logo"
+            ><img src="/HTML/e-learning/imgs/Logo.png" alt="iSkills logo"
+          /></a>
+          <button type="button" class="btn nav-btn">
+            <i class="fas fa-align-justify"></i>
+          </button>
+        </div>
+        <!-- links-->
+        <div class="links">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="tags.html" class="nav-link">Feild</a>
+          <a href="courses.html" class="nav-link">Course</a>
+          <a href="cart.html" class="nav-link"
+            ><i class="fa fa-shopping-cart"></i>Cart</a
+          >
+          <div class="nav-link contact-link">
+            <a href="contact.html" class="btn">Contact</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- end nav -->
+
+    <!--main-->
+    <main class="page">
+      <!--home-header-->
+      <header class="hero">
+        <div class="hero-container">
+          <div class="hero-text">
+            <h1>iSkills</h1>
+            <h4>Unlock your potential anytime, anywhere – <br/>
+              Learn, grow, and succeed with our online courses!</h4>
+          </div>
+          <!--Search-->
+          <div class="search">
+            <form action="javascript:void(0);">
+              <input type="text" id="search" placeholder="Search Recipes..." />
+              <button type="submit">
+                <i class="material-icons logo">search</i>
+              </button>
+            </form>
+          </div>
+          <!--end Search-->
+        </div>
+      </header>
+      <!--end home-header-->
+
+      <script>
+        // Enhanced filter and search functionality
+        document.addEventListener("DOMContentLoaded", () => {
+          function createFilterUI() {
+            const heroSection = document.querySelector(".hero");
+
+            if (heroSection) {
+              const filterHTML = `
+        <div class="filter-container">
+          <button class="filter-btn">
+            <i class="fas fa-filter"></i>
+            Filter
+          </button>
+          <div class="filter-menu">
+            <label class="filter-item">
+              <input type="radio" name="category-filter" value="" class="category-filter" checked />
+              <span>All</span>
+            </label>
+            <label class="filter-item">
+              <input type="radio" name="category-filter" value="Frontend" class="category-filter" />
+              <span>Frontend</span>
+            </label>
+            <label class="filter-item">
+              <input type="radio" name="category-filter" value="Backend" class="category-filter" />
+              <span>Backend</span>
+            </label>
+            <label class="filter-item">
+              <input type="radio" name="category-filter" value="Embedded Systems" class="category-filter" />
+              <span>Embedded Systems</span>
+            </label>
+            <label class="filter-item">
+              <input type="radio" name="category-filter" value="Machine Learning" class="category-filter" />
+              <span>Machine Learning</span>
+            </label>
+          </div>
+        </div>
+      `;
+
+              heroSection.insertAdjacentHTML("afterend", filterHTML);
+            }
+          }
+
+          // Create filter UI
+          createFilterUI();
+
+          // Filter menu toggle
+          const filterContainer = document.querySelector(".filter-container");
+          const filterButton = document.querySelector(".filter-btn");
+
+          if (filterButton) {
+            filterButton.addEventListener("click", () => {
+              filterContainer.classList.toggle("active");
+            });
+
+            // Close filter when clicking outside
+            document.addEventListener("click", (event) => {
+              if (
+                !filterContainer.contains(event.target) &&
+                event.target !== filterButton &&
+                !filterButton.contains(event.target)
+              ) {
+                filterContainer.classList.remove("active");
+              }
+            });
+          }
+
+          // Filter and search functionality
+          const categoryFilters = document.querySelectorAll(".category-filter");
+          const searchInput = document.getElementById("search");
+          const recipeElements = document.querySelectorAll(".course");
+
+          function updateFilterVisibility() {
+            const selectedFilter = document.querySelector(
+              'input[name="category-filter"]:checked'
+            ).value;
+            const searchTerm = searchInput.value.toLowerCase();
+
+            recipeElements.forEach((recipe) => {
+              const recipeCategory = recipe.getAttribute("data-category");
+              const recipeTitle = recipe
+                .querySelector("h5")
+                .textContent.toLowerCase();
+
+              const categoryMatch =
+                selectedFilter === "" || selectedFilter === recipeCategory;
+              const searchMatch = recipeTitle.includes(searchTerm);
+
+              recipe.style.display =
+                categoryMatch && searchMatch ? "block" : "none";
+            });
+          }
+
+          // Add event listeners for filtering and searching
+          categoryFilters.forEach((radio) => {
+            radio.addEventListener("change", updateFilterVisibility);
+          });
+
+          searchInput.addEventListener("input", updateFilterVisibility);
+        });
+      </script>
+
+      <!--courses-layout-->
+      <section class="courses-container">
+        <!--tag container-->
+        <div class="tag-container">
+          <h4>courses</h4>
+          <div class="tag-list">
+            <a href="tag-temp.html">Frontend (10)</a>
+            <a href="tag-temp.html">Backend (5)</a>
+            <a href="tag-temp.html">Embedded Systems (20)</a>
+            <a href="tag-temp.html">Machine Learning (14)</a>
+          </div>
+        </div>
+        <!--end tag container-->
+
+        <!--courses list-->
+        <div class="course-list">
+          <!--single course-->
+          <a
+            href=""
+            class="course option"
+            data-category="Frontend"
+          >
+            <img
+              src="/HTML/e-learning/imgs/3.jpg"
+              alt="course"
+              class="img course-img"
+            />
+            <h5>The Complete Front-End Web Development CourseGet started with
+              HTML, CSS, JavaScript, jQuery, and Bootstrap!</h5>
+            <p>Rating: 4.3 out of 514333 reviews</p>
+            <p>Price: 220$</p>
+          </a>
+          <a href="" 
+            class="course option" 
+            data-category="Backend">
+            <img
+              src="/HTML/e-learning/imgs/5.jpg"
+              alt="course"
+              class="img course-img"
+            />
+            <h5>Backend Master Class [Golang + Postgres + Kubernetes + gRPC]</h5>
+            <p>Rating: 4.8 out of 214333 reviews</p>
+            <p>Price: 300$</p>
+          </a>
+          <a
+            href=""
+            class="course option"
+            data-category="Embedded Systems"
+          >
+            <img
+              src="/HTML/e-learning/imgs/1.jpg"
+              alt="course"
+              class="img course-img"
+            />
+            <h5>Mastering Microcontroller and Embedded Driver Development</h5>
+            <p>Rating: 4.1 out of 812633 reviews</p>
+            <p>Price: 180$</p>
+          </a>
+          <a
+            href=""
+            class="course option"
+            data-category="Embedded Systems"
+          >
+            <img
+              src="/HTML/e-learning/imgs/2.jpg"
+              alt="course"
+              class="img course-img"
+            />
+            <h5>Introduction to Embedded Systems Software and Development Environments</h5>
+            <p>Rating: 4.9 out of 414983 reviews</p>
+            <p>Price: 250$</p>
+          </a>
+          <a
+            href=""
+            class="course option"
+            data-category="Machine Learning"
+          >
+            <img
+              src="/HTML/e-learning/imgs/4.jpg"
+              alt="course"
+              class="img course-img"
+            />
+            <h5>Machine Learning A-Z: AI, Python & R + ChatGPT Prize [2025]</h5>
+            <p>Rating: 4.7 out of 114823 reviews</p>
+            <p>Price: 200$</p>
+          </a>
+          <!--end single course-->
+        </div>
+        <!--end courses list-->
+      </section>
+      <!--end courses-layout-->
+    </main>
+    <!--end main-->
+
+    <!--footer-->
+    <footer class="page-footer">
+      <p>
+        &copy;<span id="date">2025</span>
+        <span class="footer-logo">Mimi Foods</span>
+        Build by <a href="https://abdelrhman744.github.io/Portfolio/">Hetta</a>
+      </p>
+    </footer>
+
+    <script>
+      const getElement = (selector) => {
+        const element = document.querySelector(selector);
+        if (element) return element;
+        throw Error(
+          `Please double check your class names, there is no ${selector} class`
+        );
+      };
+      const linkss = getElement(".links");
+      const navBtnDOM = getElement(".nav-btn");
+
+      navBtnDOM.addEventListener("click", () => {
+        linkss.classList.toggle("show-link");
+      });
+
+      const date = getElement("#date");
+      const currentYear = new Date().getFullYear();
+      date.textContent = currentYear;
+    </script>
+
+    <script>
+      // JavaScript for live search functionality
+      const optionsEls = document.querySelectorAll(".option");
+      const searchInput = document.getElementById("search");
+
+      searchInput.addEventListener("input", function () {
+        const searchTerm = this.value.toLowerCase();
+        optionsEls.forEach(function (optionEl) {
+          const title = optionEl.querySelector("h5").textContent.toLowerCase();
+          const isMatch = title.includes(searchTerm);
+          optionEl.style.display = isMatch ? "block" : "none";
+        });
+      });
+    </script>
+  </body>
+</html>
